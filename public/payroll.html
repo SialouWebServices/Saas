@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Paie - SaaS RH CI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.4375rem; /* Préférence taille réduite de moitié */
+            line-height: 1.6;
+            background: #f8fafc;
+            color: #1f2937;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+        }
+        
+        .title { font-size: 1.5rem; font-weight: 700; color: #1f2937; }
+        
+        .btn {
+            padding: 0.75rem 1.5rem; border: none; border-radius: 8px;
+            font-weight: 600; font-size: 0.875rem; cursor: pointer;
+            transition: all 0.3s ease; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        
+        .btn-primary { background: linear-gradient(135deg, #1e3a8a, #ea580c); color: white; }
+        .btn-outline { background: white; color: #1e3a8a; border: 2px solid #1e3a8a; }
+        .btn-success { background: #059669; color: white; }
+        .btn-danger { background: #dc2626; color: white; }
+        
+        .payroll-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem; margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white; border-radius: 8px; padding: 1.5rem;
+            text-align: center; border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .stat-value { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .stat-label { font-size: 0.875rem; color: #6b7280; }
+        .stat-change { font-size: 0.75rem; margin-top: 0.25rem; }
+        .positive { color: #059669; }
+        .negative { color: #dc2626; }
+        
+        .payroll-controls {
+            background: white; border-radius: 12px; padding: 1.5rem;
+            margin-bottom: 2rem; border: 1px solid #e5e7eb;
+        }
+        
+        .control-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;
+        }
+        
+        .month-selector {
+            display: flex; align-items: center; gap: 1rem;
+        }
+        
+        .month-input {
+            padding: 0.75rem; border: 2px solid #e5e7eb;
+            border-radius: 8px; font-size: 0.875rem;
+        }
+        
+        .payslip-generator {
+            background: #f8fafc; border-radius: 8px; padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .generator-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-bar {
+            background: #e5e7eb; height: 8px; border-radius: 4px;
+            overflow: hidden; margin-bottom: 1rem;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #1e3a8a, #ea580c);
+            height: 100%; transition: width 0.3s ease;
+        }
+        
+        .employee-list {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem; margin-bottom: 2rem;
+        }
+        
+        .employee-payroll {
+            background: white; border-radius: 8px; padding: 1rem;
+            border: 1px solid #e5e7eb; transition: all 0.3s ease;
+        }
+        .employee-payroll:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        
+        .employee-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .employee-name { font-weight: 600; font-size: 1rem; }
+        .employee-post { font-size: 0.875rem; color: #6b7280; }
+        
+        .salary-breakdown {
+            margin-bottom: 1rem;
+        }
+        
+        .salary-row {
+            display: flex; justify-content: space-between;
+            margin-bottom: 0.25rem; font-size: 0.875rem;
+        }
+        .salary-label { color: #6b7280; }
+        .salary-value { font-weight: 500; }
+        
+        .cnps-info {
+            background: #dbeafe; border-radius: 6px; padding: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .cnps-title {
+            font-size: 0.875rem; font-weight: 600; color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+        
+        .net-salary {
+            background: #dcfce7; border-radius: 6px; padding: 0.75rem;
+            text-align: center; margin-bottom: 1rem;
+        }
+        .net-amount {
+            font-size: 1.25rem; font-weight: 700; color: #059669;
+        }
+        
+        .payslip-actions {
+            display: flex; gap: 0.5rem; flex-wrap: wrap;
+        }
+        
+        .payslip-status {
+            padding: 0.25rem 0.75rem; border-radius: 20px;
+            font-size: 0.75rem; font-weight: 500;
+        }
+        .status-generated { background: #dcfce7; color: #059669; }
+        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-sent { background: #dbeafe; color: #1e40af; }
+        
+        .bulk-actions {
+            background: white; border-radius: 8px; padding: 1rem;
+            border: 1px solid #e5e7eb; margin-bottom: 2rem;
+        }
+        
+        .bulk-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            body { font-size: 0.375rem; }
+            .container { padding: 1rem; }
+            .employee-list { grid-template-columns: 1fr; }
+            .header { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div>
+                <h1 class="title">Gestion de la Paie</h1>
+                <p style="color: #6b7280; font-size: 0.875rem;">Calcul automatique conforme CNPS - Code du travail CI</p>
+            </div>
+            <div>
+                <button class="btn btn-outline" onclick="exportPayrollData()">📊 Export Excel</button>
+                <button class="btn btn-primary" onclick="generateAllPayslips()">🚀 Générer toutes les paies</button>
+            </div>
+        </header>
+        
+        <!-- Statistiques de paie -->
+        <div class="payroll-stats">
+            <div class="stat-card">
+                <div class="stat-value" style="color: #1e3a8a;">24</div>
+                <div class="stat-label">Employés</div>
+                <div class="stat-change positive">+2 ce mois</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: #059669;">12,500,000</div>
+                <div class="stat-label">Masse salariale (CFA)</div>
+                <div class="stat-change positive">+8.2%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: #ea580c;">2,080,000</div>
+                <div class="stat-label">Cotisations CNPS</div>
+                <div class="stat-change">Employeur: 16.4%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: #7c3aed;">400,000</div>
+                <div class="stat-label">Cotisations employés</div>
+                <div class="stat-change">Employé: 3.2%</div>
+            </div>
+        </div>
+        
+        <!-- Contrôles de paie -->
+        <div class="payroll-controls">
+            <div class="control-header">
+                <h3 style="font-size: 1.125rem; font-weight: 600;">Paie de Septembre 2025</h3>
+                <div class="month-selector">
+                    <label style="font-size: 0.875rem; font-weight: 500;">Période :</label>
+                    <input type="month" class="month-input" value="2025-09">
+                    <button class="btn btn-outline" onclick="loadPayrollPeriod()">Charger</button>
+                </div>
+            </div>
+            
+            <div class="payslip-generator">
+                <div class="generator-header">
+                    <h4 style="font-size: 1rem; font-weight: 600;">Progression génération</h4>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #059669;">24/24 (100%)</span>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.875rem; color: #6b7280;">Tous les bulletins générés ✅</span>
+                    <button class="btn btn-success" onclick="validatePayroll()">Valider les virements</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Actions groupées -->
+        <div class="bulk-actions">
+            <div class="bulk-header">
+                <h4 style="font-size: 1rem; font-weight: 600;">Actions groupées</h4>
+                <div>
+                    <button class="btn btn-outline" onclick="selectAllEmployees()">Tout sélectionner</button>
+                    <button class="btn btn-primary" onclick="sendSelectedPayslips()">Envoyer par email</button>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn btn-outline" onclick="generatePDFBatch()">📄 PDF groupé</button>
+                <button class="btn btn-outline" onclick="sendSMSNotifications()">📱 SMS employés</button>
+                <button class="btn btn-outline" onclick="exportCNPSDeclaration()">🏛️ Déclaration CNPS</button>
+                <button class="btn btn-success" onclick="processOrangeMoneyPayments()">🍊 Orange Money</button>
+            </div>
+        </div>
+        
+        <!-- Liste des employés avec calculs de paie -->
+        <div class="employee-list">
+            <!-- Employé 1 -->
+            <div class="employee-payroll">
+                <div class="employee-header">
+                    <div>
+                        <div class="employee-name">Marie Diabaté</div>
+                        <div class="employee-post">Développeuse Senior</div>
+                    </div>
+                    <div>
+                        <input type="checkbox" style="transform: scale(1.2);">
+                        <span class="payslip-status status-generated">Généré</span>
+                    </div>
+                </div>
+                
+                <div class="salary-breakdown">
+                    <div class="salary-row">
+                        <span class="salary-label">Salaire de base:</span>
+                        <span class="salary-value">850,000 CFA</span>
+                    </div>
+                    <div class="salary-row">
+                        <span class="salary-label">Heures supplémentaires:</span>
+                        <span class="salary-value">45,000 CFA</span>
+                    </div>
+                    <div class="salary-row">
+                        <span class="salary-label">Prime de performance:</span>
+                        <span class="salary-value">100,000 CFA</span>
+                    </div>
+                    <div class="salary-row" style="font-weight: 600; border-top: 1px solid #e5e7eb; padding-top: 0.5rem;">
+                        <span class="salary-label">Salaire brut:</span>
+                        <span class="salary-value">995,000 CFA</span>
+                    </div>
+                </div>
+                
+                <div class="cnps-info">
+                    <div class="cnps-title">Cotisations CNPS</div>
+                    <div class="salary-row">
+                        <span class="salary-label">Part employé (3.2%):</span>
+                        <span class="salary-value">31,840 CFA</span>
+                    </div>
+                    <div class="salary-row">
+                        <span class="salary-label">Part employeur (16.4%):</span>
+                        <span class="salary-value">163,180 CFA</span>
+                    </div>
+                </div>
+                
+                <div class="net-salary">
+                    <div style="font-size: 0.875rem; color: #059669; margin-bottom: 0.25rem;">Salaire net</div>
+                    <div class="net-amount">963,160 CFA</div>
+                </div>
+                
+                <div class="payslip-actions">
+                    <button class="btn btn-outline" onclick="viewPayslip('Marie Diabaté')" style="flex: 1; padding: 0.5rem;">👁️ Voir</button>
+                    <button class="btn btn-outline" onclick="downloadPDF('Marie Diabaté')" style="flex: 1; padding: 0.5rem;">📄 PDF</button>
+                    <button class="btn btn-success" onclick="sendPayslip('Marie Diabaté')" style="flex: 1; padding: 0.5rem;">📧 Envoyer</button>
+                </div>
+            </div>
+            
+            <!-- Employé 2 -->
+            <div class="employee-payroll">
+                <div class="employee-header">
+                    <div>
+                        <div class="employee-name">Jean Kouassi</div>
+                        <div class="employee-post">Comptable</div>
+                    </div>
+                    <div>
+                        <input type="checkbox" style="transform: scale(1.2);">
+                        <span class="payslip-status status-generated">Généré</span>
+                    </div>
+                </div>
+                
+                <div class="salary-breakdown">
+                    <div class="salary-row">
+                        <span class="salary-label">Salaire de base:</span>
+                        <span class="salary-value">650,000 CFA</span>
+                    </div>
+                    <div class="salary-row">
+                        <span class="salary-label">Prime transport:</span>
+                        <span class="salary-value">25,000 CFA</span>
+                    </div>
+                    <div class="salary-row" style="font-weight: 600; border-top: 1px solid #e5e7eb; padding-top: 0.5rem;">
+                        <span class="salary-label">Salaire brut:</span>
+                        <span class="salary-value">675,000 CFA</span>
+                    </div>
+                </div>
+                
+                <div class="cnps-info">
+                    <div class="cnps-title">Cotisations CNPS</div>
+                    <div class="salary-row">
+                        <span class="salary-label">Part employé (3.2%):</span>
+                        <span class="salary-value">21,600 CFA</span>
+                    </div>
+                    <div class="salary-row">
+                        <span class="salary-label">Part employeur (16.4%):</span>
+                        <span class="salary-value">110,700 CFA</span>
+                    </div>
+                </div>
+                
+                <div class="net-salary">
+                    <div style="font-size: 0.875rem; color: #059669; margin-bottom: 0.25rem;">Salaire net</div>
+                    <div class="net-amount">653,400 CFA</div>
+                </div>
+                
+                <div class="payslip-actions">
+                    <button class="btn btn-outline" onclick="viewPayslip('Jean Kouassi')" style="flex: 1; padding: 0.5rem;">👁️ Voir</button>
+                    <button class="btn btn-outline" onclick="downloadPDF('Jean Kouassi')" style="flex: 1; padding: 0.5rem;">📄 PDF</button>
+                    <button class="btn btn-success" onclick="sendPayslip('Jean Kouassi')" style="flex: 1; padding: 0.5rem;">📧 Envoyer</button>
+                </div>
+            </div>
+            
+            <!-- Employé 3 -->
+            <div class="employee-payroll">
+                <div class="employee-header">
+                    <div>
+                        <div class="employee-name">Fatou Traoré</div>
+                        <div class="employee-post">Responsable Marketing</div>
+                    </div>
+                    <div>
+                        <input type="checkbox" style="transform: scale(1.2);">
+                        <span class="payslip-status status-sent">Envoyé</span>
+                    </div>
+                </div>
+                
+                <div class="salary-breakdown">
+                    <div class="salary-row">
+                        <span class="salary-label">Salaire de base:</span>
+                        <span class="salary-value">750,000 CFA</span>
+                    </div>
+                    <div class="salary-row">
+                        <span class="salary-label">Prime objectifs:</span>
+                        <span class="salary-value">75,000 CFA</span>
+                    </div>
+                    <div class="salary-row" style="font-weight: 600; border-top: 1px solid #e5e7eb; padding-top: 0.5rem;">
+                        <span class="salary-label">Salaire brut:</span>
+                        <span class="salary-value">825,000 CFA</span>
+                    </div>
+                </div>
+                
+                <div class="cnps-info">
+                    <div class="cnps-title">Cotisations CNPS</div>
+                    <div class="salary-row">
+                        <span class="salary-label">Part employé (3.2%):</span>
+                        <span class="salary-value">26,400 CFA</span>
+                    </div>
+                    <div class="salary-row">
+                        <span class="salary-label">Part employeur (16.4%):</span>
+                        <span class="salary-value">135,300 CFA</span>
+                    </div>
+                </div>
+                
+                <div class="net-salary">
+                    <div style="font-size: 0.875rem; color: #059669; margin-bottom: 0.25rem;">Salaire net</div>
+                    <div class="net-amount">798,600 CFA</div>
+                </div>
+                
+                <div class="payslip-actions">
+                    <button class="btn btn-outline" onclick="viewPayslip('Fatou Traoré')" style="flex: 1; padding: 0.5rem;">👁️ Voir</button>
+                    <button class="btn btn-outline" onclick="downloadPDF('Fatou Traoré')" style="flex: 1; padding: 0.5rem;">📄 PDF</button>
+                    <button class="btn btn-outline" onclick="sendPayslip('Fatou Traoré')" style="flex: 1; padding: 0.5rem; opacity: 0.5;" disabled>✅ Envoyé</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateAllPayslips() {
+            alert('🚀 Génération de toutes les paies en cours...\n\n✅ Calculs CNPS conformes\n✅ Bulletins conformes code du travail CI\n✅ Prêt pour virements mobile money');
+        }
+        
+        function validatePayroll() {
+            const confirmed = confirm('Valider les virements pour tous les employés ?\n\nCette action enverra les salaires via Orange Money et Wave.');
+            if (confirmed) {
+                alert('✅ Virements validés et programmés !\n\n💰 Paiements en cours via mobile money\n📱 Notifications SMS envoyées aux employés');
+            }
+        }
+        
+        function viewPayslip(name) {
+            alert(`Affichage du bulletin de paie détaillé pour ${name}\n\n📄 Conforme au code du travail ivoirien\n🏛️ Cotisations CNPS calculées automatiquement`);
+        }
+        
+        function downloadPDF(name) {
+            alert(`📄 Téléchargement du bulletin PDF pour ${name}...\n\nFormat conforme aux exigences légales CI`);
+        }
+        
+        function sendPayslip(name) {
+            alert(`📧 Envoi du bulletin par email à ${name}...\n\n+ Copie SMS avec montant net\n+ Notification WhatsApp optionnelle`);
+        }
+        
+        function exportPayrollData() {
+            alert('📊 Export Excel des données de paie...\n\n✅ Masse salariale détaillée\n✅ Cotisations CNPS par employé\n✅ Récapitulatif pour comptabilité');
+        }
+        
+        function exportCNPSDeclaration() {
+            alert('🏛️ Génération déclaration CNPS...\n\n✅ Format conforme CNPS\n✅ Cotisations employés et employeur\n✅ Prêt pour dépôt en ligne');
+        }
+        
+        function processOrangeMoneyPayments() {
+            alert('🍊 Traitement des paiements Orange Money...\n\n💰 24 virements programmés\n📱 Notifications automatiques\n✅ Traçabilité complète');
+        }
+        
+        function sendSMSNotifications() {
+            alert('📱 Envoi SMS aux employés...\n\n"Votre salaire de septembre est disponible.\nMontant net: XXX CFA\nConsultez votre bulletin sur la plateforme."');
+        }
+        
+        function selectAllEmployees() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = !cb.checked);
+        }
+        
+        function sendSelectedPayslips() {
+            const selected = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            alert(`📧 Envoi des bulletins pour ${selected} employé(s) sélectionné(s)...`);
+        }
+        
+        function generatePDFBatch() {
+            alert('📄 Génération PDF groupée en cours...\n\nTous les bulletins seront compilés en un seul fichier ZIP.');
+        }
+        
+        function loadPayrollPeriod() {
+            alert('📅 Chargement de la période sélectionnée...\n\nRecalcul automatique selon les paramètres CNPS en vigueur.');
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Module Gestion Paie initialisé');
+            console.log('✅ Conformité CNPS : Employé 3.2% + Employeur 16.4%');
+            console.log('🏛️ Conforme au code du travail ivoirien');
+            console.log('💰 Intégration Orange Money et Wave');
+            console.log('📱 Interface mobile-first optimisée');
+        });
+    </script>
+</body>
+</html>

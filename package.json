@@ -1,0 +1,91 @@
+{
+  "name": "saas-rh-ci",
+  "version": "1.0.0",
+  "description": "Plateforme SaaS RH spécialement adaptée aux PME ivoiriennes",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "export": "next build && next export",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:e2e": "playwright test",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio",
+    "db:migrate": "prisma migrate dev",
+    "db:reset": "prisma migrate reset",
+    "deploy": "npm run build && npm run db:push",
+    "deploy:vercel": "vercel --prod",
+    "deploy:railway": "railway up",
+    "deploy:github": "npm run export && gh-pages -d out"
+  },
+  "dependencies": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "next": "15.5.3",
+    "@prisma/client": "^5.7.0",
+    "prisma": "^5.7.0",
+    "@next-auth/prisma-adapter": "^1.0.7",
+    "next-auth": "^4.24.5",
+    "bcryptjs": "^2.4.3",
+    "zod": "^3.22.4",
+    "react-hook-form": "^7.48.2",
+    "@hookform/resolvers": "^3.3.2",
+    "date-fns": "^2.30.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.2.0",
+    "lucide-react": "^0.303.0",
+    "@headlessui/react": "^1.7.17",
+    "jspdf": "^2.5.1",
+    "xlsx": "^0.18.5",
+    "@types/bcryptjs": "^2.4.6"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.3",
+    "@eslint/eslintrc": "^3",
+    "jest": "^29.7.0",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/jest-dom": "^6.1.5",
+    "jest-environment-jsdom": "^29.7.0",
+    "@playwright/test": "^1.40.1"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "keywords": [
+    "SaaS",
+    "RH",
+    "Côte d'Ivoire",
+    "PME",
+    "Paie",
+    "CNPS",
+    "Mobile Money",
+    "Orange Money",
+    "Wave"
+  ],
+  "author": "SaaS RH CI Team",
+  "license": "MIT",
+  "homepage": "https://saas-rh-ci.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/votre-username/saas-rh-ci.git"
+  },
+  "bugs": {
+    "url": "https://github.com/votre-username/saas-rh-ci/issues"
+  }
+}

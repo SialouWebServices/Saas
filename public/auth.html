@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1E3A8A">
+    <title>Connexion - SaaS RH Côte d'Ivoire</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.4375rem; /* Préférence utilisateur : taille réduite de moitié (7px) */
+            line-height: 1.6;
+            background: linear-gradient(135deg, #1e3a8a 0%, #ea580c 100%);
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            color: #1f2937;
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3a8a, #ea580c);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+        
+        .subtitle {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-tab.active {
+            background: white;
+            color: #1e3a8a;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .auth-tab:not(.active) {
+            color: #6b7280;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-size: 0.75rem;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3a8a, #ea580c);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: #1e3a8a;
+            border: 2px solid #1e3a8a;
+        }
+        
+        .btn-outline:hover {
+            background: #1e3a8a;
+            color: white;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .forgot-password a {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-size: 0.75rem;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        
+        .company-info {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .company-info h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+        
+        .company-info p {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .checkbox-group label {
+            font-size: 0.75rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.75rem;
+        }
+        
+        .alert-success {
+            background: #ecfdf5;
+            color: #059669;
+            border: 1px solid #a7f3d0;
+        }
+        
+        .alert-error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .features-list {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .features-list h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        
+        .features-list ul {
+            list-style: none;
+        }
+        
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        
+        .features-list li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 640px) {
+            body {
+                font-size: 0.375rem; /* Encore plus petit sur mobile */
+                padding: 0.5rem;
+            }
+            
+            .auth-container {
+                padding: 1.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="logo">RH</div>
+            <h1>SaaS RH CI</h1>
+            <p class="subtitle">Plateforme de gestion RH pour PME ivoiriennes</p>
+        </div>
+
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="switchTab('login')">Connexion</div>
+            <div class="auth-tab" onclick="switchTab('register')">Inscription</div>
+        </div>
+
+        <!-- Formulaire de connexion -->
+        <div id="login-form" class="auth-form active">
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-email">Email professionnel</label>
+                    <input type="email" id="login-email" required placeholder="votre-email@entreprise.ci">
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Mot de passe</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>
+            
+            <div class="forgot-password">
+                <a href="#" onclick="showForgotPassword()">Mot de passe oublié ?</a>
+            </div>
+        </div>
+
+        <!-- Formulaire d'inscription -->
+        <div id="register-form" class="auth-form">
+            <div class="company-info">
+                <h3>Informations de l'entreprise</h3>
+                <p>Créez votre compte pour commencer à digitaliser votre gestion RH</p>
+            </div>
+            
+            <form onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="company-name">Nom de l'entreprise</label>
+                    <input type="text" id="company-name" required placeholder="SARL Mon Entreprise">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company-siret">N° RCCM</label>
+                        <input type="text" id="company-siret" required placeholder="CI-ABJ-2024-123456">
+                    </div>
+                    <div class="form-group">
+                        <label for="company-cnps">N° CNPS</label>
+                        <input type="text" id="company-cnps" required placeholder="12345678">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="admin-name">Nom du responsable RH</label>
+                    <input type="text" id="admin-name" required placeholder="Prénom Nom">
+                </div>
+                
+                <div class="form-group">
+                    <label for="admin-email">Email professionnel</label>
+                    <input type="email" id="admin-email" required placeholder="rh@entreprise.ci">
+                </div>
+                
+                <div class="form-group">
+                    <label for="admin-phone">Téléphone</label>
+                    <input type="tel" id="admin-phone" required placeholder="+225 07 XX XX XX XX">
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-password">Mot de passe</label>
+                    <input type="password" id="register-password" required placeholder="••••••••">
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">J'accepte les <a href="#" style="color: #1e3a8a;">conditions d'utilisation</a> et la <a href="#" style="color: #1e3a8a;">politique de confidentialité</a></label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="newsletter">
+                    <label for="newsletter">Recevoir les actualités et conseils RH par email</label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Créer mon compte</button>
+            </form>
+        </div>
+
+        <!-- Liste des fonctionnalités -->
+        <div class="features-list">
+            <h4>Pourquoi choisir SaaS RH CI ?</h4>
+            <ul>
+                <li>Calcul automatique conforme CNPS</li>
+                <li>Bulletins de paie légaux CI</li>
+                <li>Paiements Orange Money & Wave</li>
+                <li>Interface mobile-first</li>
+                <li>Support en français 24/7</li>
+                <li>Gratuit jusqu'à 5 employés</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            // Désactiver tous les onglets et formulaires
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            // Activer l'onglet et le formulaire sélectionnés
+            event.target.classList.add('active');
+            document.getElementById(tab + '-form').classList.add('active');
+        }
+        
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Simulation de connexion
+            showAlert('Connexion en cours...', 'info');
+            
+            setTimeout(() => {
+                if (email && password) {
+                    showAlert('Connexion réussie ! Redirection vers le dashboard...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard.html';
+                    }, 1500);
+                } else {
+                    showAlert('Email ou mot de passe incorrect', 'error');
+                }
+            }, 1000);
+        }
+        
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const companyName = document.getElementById('company-name').value;
+            const adminEmail = document.getElementById('admin-email').value;
+            const terms = document.getElementById('terms').checked;
+            
+            if (!terms) {
+                showAlert('Veuillez accepter les conditions d\'utilisation', 'error');
+                return;
+            }
+            
+            // Simulation d'inscription
+            showAlert('Création du compte en cours...', 'info');
+            
+            setTimeout(() => {
+                showAlert(`Compte créé avec succès pour ${companyName} ! Redirection vers l'onboarding...`, 'success');
+                setTimeout(() => {
+                    window.location.href = '/onboarding.html';
+                }, 2000);
+            }, 1500);
+        }
+        
+        function showForgotPassword() {
+            const email = prompt('Entrez votre adresse email pour recevoir un lien de réinitialisation :');
+            if (email) {
+                showAlert(`Email de réinitialisation envoyé à ${email}`, 'success');
+            }
+        }
+        
+        function showAlert(message, type) {
+            // Supprimer les alertes existantes
+            const existingAlerts = document.querySelectorAll('.alert');
+            existingAlerts.forEach(alert => alert.remove());
+            
+            // Créer nouvelle alerte
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            // Insérer au début du formulaire actif
+            const activeForm = document.querySelector('.auth-form.active');
+            activeForm.insertBefore(alert, activeForm.firstChild);
+            
+            // Supprimer après 4 secondes
+            setTimeout(() => {
+                alert.remove();
+            }, 4000);
+        }
+        
+        // Validation en temps réel
+        document.addEventListener('DOMContentLoaded', function() {
+            // Validation email
+            const emailInputs = document.querySelectorAll('input[type="email"]');
+            emailInputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (this.value && !emailRegex.test(this.value)) {
+                        this.style.borderColor = '#dc2626';
+                    } else {
+                        this.style.borderColor = '#e5e7eb';
+                    }
+                });
+            });
+            
+            // Validation téléphone
+            const phoneInput = document.getElementById('admin-phone');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function() {
+                    // Format automatique pour numéros ivoiriens
+                    let value = this.value.replace(/\D/g, '');
+                    if (value.startsWith('225')) {
+                        value = value.substring(3);
+                    }
+                    if (value.length >= 10) {
+                        this.value = `+225 ${value.substring(0, 2)} ${value.substring(2, 4)} ${value.substring(4, 6)} ${value.substring(6, 8)} ${value.substring(8, 10)}`;
+                    }
+                });
+            }
+            
+            console.log('🚀 Système d\'authentification SaaS RH CI initialisé');
+            console.log('✅ Interface mobile-first avec taille de police optimisée');
+        });
+    </script>
+</body>
+</html>
