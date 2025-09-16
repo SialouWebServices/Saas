@@ -2,7 +2,7 @@
 
 > **Plateforme de Gestion des Ressources Humaines spécialement conçue pour les PME ivoiriennes**
 
-[![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://votre-username.github.io/saas-rh-ci)
+[![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://https://sialouwebservices.github.io/Saas/)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748)](https://prisma.io/)
@@ -13,18 +13,18 @@
 Révolutionner la gestion RH pour les entreprises ivoiriennes avec une solution **100% adaptée au contexte local** : conformité CNPS, paiements Mobile Money, interface mobile-first et tarification accessible.
 
 ### **🎪 Démo Live**
-**[👉 Voir l'application en action](https://votre-username.github.io/saas-rh-ci)**
+**[👉 Voir l'application en action](https://sialouwebservices.github.io/Saas/)**
 
 ---
 
 ## ⚡ **Démarrage Rapide**
 
 ### **🔗 Liens Utiles**
-- **🏠 Homepage :** [Interface d'accueil](https://votre-username.github.io/saas-rh-ci)
-- **📋 Dashboard :** [Interface de gestion](https://votre-username.github.io/saas-rh-ci/dashboard.html)
-- **👥 Gestion Employés :** [Module employés](https://votre-username.github.io/saas-rh-ci/employees.html)
-- **💰 Module Paie :** [Calculs et bulletins](https://votre-username.github.io/saas-rh-ci/payroll.html)
-- **💳 Tarification :** [Plans d'abonnement](https://votre-username.github.io/saas-rh-ci/pricing.html)
+- **🏠 Homepage :** [Interface d'accueil](https://sialouwebservices.github.io/Saas/)
+- **📋 Dashboard :** [Interface de gestion](https://sialouwebservices.github.io/Saas/dashboard.html)
+- **👥 Gestion Employés :** [Module employés](https://sialouwebservices.github.io/Saas/employees.html)
+- **💰 Module Paie :** [Calculs et bulletins](https://sialouwebservices.github.io/Saas/payroll.html)
+- **💳 Tarification :** [Plans d'abonnement](https://sialouwebservices.github.io/Saas/pricing.html)
 
 ### **🔑 Comptes de Test**
 ```
@@ -134,7 +134,7 @@ Git
 ### **⚡ Installation Locale**
 ```bash
 # 1. Cloner le projet
-git clone https://github.com/votre-username/saas-rh-ci.git
+git clone https://github.com/sialouwebservices/Saas/.git
 cd saas-rh-ci
 
 # 2. Installer les dépendances
@@ -210,7 +210,7 @@ npm run test:coverage
 ```bash
 # Déploiement automatique via GitHub Actions
 git push origin main
-# ➜ Disponible sur : https://votre-username.github.io/saas-rh-ci
+# ➜ Disponible sur : https://sialouwebservices.github.io/Saas/
 ```
 
 ### **☁️ Production (Vercel/Netlify)**
@@ -291,18 +291,18 @@ docker run -p 3000:3000 saas-rh-ci
 ## 📞 **Support & Contact**
 
 ### **💬 Communauté**
-- **Discord** : [Serveur développeurs](https://discord.gg/saas-rh-ci)
-- **Forum** : [GitHub Discussions](https://github.com/votre-username/saas-rh-ci/discussions)
-- **Twitter** : [@SaasRhCI](https://twitter.com/SaasRhCI)
+- **Discord** : [Serveur développeurs](https://discord.gg/sws)
+- **Forum** : [GitHub Discussions](https://github.com/SialouWebServices/SaaS/ discussions)
+- **Twitter** : [@SaasRhCI](https://twitter.com/sws)
 
 ### **🆘 Support Technique**
-- **Email** : support@saas-rh-ci.com
-- **WhatsApp** : +225 XX XX XX XX XX
+- **Email** : sialouwebservices@gmail.com
+- **WhatsApp** : +225 05 06 62 82 14
 - **Heures** : Lun-Ven 8h-18h (GMT+0)
 
 ### **🏢 Partenariats**
-- **Email** : business@saas-rh-ci.com
-- **LinkedIn** : [Page Entreprise](https://linkedin.com/company/saas-rh-ci)
+- **Email** : sialouwebservices@gmail.com
+- **LinkedIn** : [Page Entreprise](https://linkedin.com/company/sws)
 
 ---
 
@@ -331,8 +331,8 @@ Un grand merci à :
 
 ### **🚀 Transformons ensemble la gestion RH en Côte d'Ivoire !**
 
-[![Démo Live](https://img.shields.io/badge/🌟_Voir_la_Démo-Live-success?style=for-the-badge)](https://votre-username.github.io/saas-rh-ci)
-[![GitHub](https://img.shields.io/badge/⭐_Star_le_Projet-GitHub-blue?style=for-the-badge)](https://github.com/votre-username/saas-rh-ci)
+[![Démo Live](https://img.shields.io/badge/🌟_Voir_la_Démo-Live-success?style=for-the-badge)](https://sialouwebservices.github.io/Saas/)
+
 
 **Fait avec ❤️ en Côte d'Ivoire 🇨🇮**
 
