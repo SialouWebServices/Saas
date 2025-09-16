@@ -2,7 +2,7 @@
 
 > **Plateforme de Gestion des Ressources Humaines spécialement conçue pour les PME ivoiriennes**
 
-[![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://https://sialouwebservices.github.io/Saas/)
+[![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://sialouwebservices.github.io/Saas/public/test.html)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748)](https://prisma.io/)
@@ -13,18 +13,18 @@
 Révolutionner la gestion RH pour les entreprises ivoiriennes avec une solution **100% adaptée au contexte local** : conformité CNPS, paiements Mobile Money, interface mobile-first et tarification accessible.
 
 ### **🎪 Démo Live**
-**[👉 Voir l'application en action](https://sialouwebservices.github.io/Saas/)**
+**[👉 Voir l'application en action](https://sialouwebservices.github.io/Saas/public/auth.html)**
 
 ---
 
 ## ⚡ **Démarrage Rapide**
 
 ### **🔗 Liens Utiles**
-- **🏠 Homepage :** [Interface d'accueil](https://sialouwebservices.github.io/Saas/)
-- **📋 Dashboard :** [Interface de gestion](https://sialouwebservices.github.io/Saas/dashboard.html)
-- **👥 Gestion Employés :** [Module employés](https://sialouwebservices.github.io/Saas/employees.html)
-- **💰 Module Paie :** [Calculs et bulletins](https://sialouwebservices.github.io/Saas/payroll.html)
-- **💳 Tarification :** [Plans d'abonnement](https://sialouwebservices.github.io/Saas/pricing.html)
+- **🏠 Homepage :** [Interface d'accueil](https://sialouwebservices.github.io/Saas/public/test.html)
+- **📋 Dashboard :** [Interface de gestion](https://sialouwebservices.github.io/Saas/public/dashboard.html)
+- **👥 Gestion Employés :** [Module employés](https://sialouwebservices.github.io/Saas/public/employees.html)
+- **💰 Module Paie :** [Calculs et bulletins](https://sialouwebservices.github.io/Saas/public/payroll.html)
+- **💳 Tarification :** [Plans d'abonnement](https://sialouwebservices.github.io/Saas/public/pricing.html)
 
 ### **🔑 Comptes de Test**
 ```
