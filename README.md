@@ -329,9 +329,10 @@ Un grand merci à :
 
 <div align="center">
 
-### **🚀 Transformons ensemble la gestion RH en Côte d'Ivoire !**
+### **🚀 Transformons ensemble la gestion RH en Côte d'Ivoire !** 
+<br>
 
-[![Démo Live](https://img.shields.io/badge/🌟_Voir_la_Démo-Live-success?style=for-the-badge)](https://sialouwebservices.github.io/Saas/)
+
 
 
 **Fait avec ❤️ en Côte d'Ivoire 🇨🇮**
