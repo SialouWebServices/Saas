@@ -419,7 +419,7 @@
                 if (email && password) {
                     showAlert('Connexion réussie ! Redirection vers le dashboard...', 'success');
                     setTimeout(() => {
-                        window.location.href = '/dashboard.html';
+                        window.location.href = '/public/dashboard.html';
                     }, 1500);
                 } else {
                     showAlert('Email ou mot de passe incorrect', 'error');
@@ -512,4 +512,5 @@
         });
     </script>
 </body>
+
 </html>
